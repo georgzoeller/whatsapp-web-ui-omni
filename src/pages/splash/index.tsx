@@ -22,9 +22,9 @@ export default function SplashPage(props: SplashPageProps) {
         <Logo id="whatsapp" />
       </LogoWrapper>
       <Progress progess={progress} />
-      <Title>WhatsApp</Title>
+      <Title>Not WhatsApp</Title>
       <SubTitle>
-        <EncryptionIcon id="lock" /> End-to-end encrypted. Built by{" "}
+        <EncryptionIcon id="lock" /> Not End-to-end encrypted. Based on work by{" "}
         <Link href="https://github.com/jazimabbas" target="_blank">
           Jazim Abbas
         </Link>{" "}

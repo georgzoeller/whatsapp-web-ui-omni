@@ -14,7 +14,9 @@ const router = createBrowserRouter([
     path: "/",
     element: <UnSelectedChatPage />,
   },
-]);
+], {
+   basename: "/extensions/omni-extension-wa-chat-ui/"
+  });
 
 export default function AppRoutes() {
   return (

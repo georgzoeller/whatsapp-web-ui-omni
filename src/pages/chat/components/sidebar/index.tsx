@@ -37,7 +37,7 @@ export default function Sidebar() {
     <SidebarContainer>
       <Header>
         <ImageWrapper>
-          <Avatar src="/assets/images/profile.png" />
+          <Avatar src="./assets/images/profile.png" />
         </ImageWrapper>
         <Actions>
           <ThemeIconContainer onClick={handleChangeThemeMode}>

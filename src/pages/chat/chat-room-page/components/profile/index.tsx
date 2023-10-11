@@ -41,9 +41,9 @@ export default function ProfileSection(props: ProfileSectionProps) {
           </MediaButton>
         </HeadingWrapper>
         <MediaImagesWrapper>
-          <MediaImage src="/assets/images/placeholder.jpeg" alt="Media" />
-          <MediaImage src="/assets/images/placeholder.jpeg" alt="Media" />
-          <MediaImage src="/assets/images/placeholder.jpeg" alt="Media" />
+          <MediaImage src="./assets/images/placeholder.jpeg" alt="Media" />
+          <MediaImage src="./assets/images/placeholder.jpeg" alt="Media" />
+          <MediaImage src="./assets/images/placeholder.jpeg" alt="Media" />
         </MediaImagesWrapper>
       </Section>
 

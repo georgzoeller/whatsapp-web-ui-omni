@@ -7,8 +7,8 @@ export default function UnSelectedChatPage() {
   const theme = useAppTheme();
 
   const getImageURL = () => {
-    if (theme.mode === "light") return "/assets/images/entry-image-light.webp";
-    return "/assets/images/entry-image-dark.png";
+    if (theme.mode === "light") return "./assets/images/entry-image-light.webp";
+    return "./assets/images/entry-image-dark.png";
   };
 
   return (

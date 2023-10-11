@@ -15,7 +15,7 @@ type ChatContextProp = {
 };
 
 const initialValue: ChatContextProp = {
-  user: { name: "Jazim Abbas", image: "/assets/images/girl.jpeg" },
+  user: { name: "Jazim Abbas", image: "./assets/images/girl.jpeg" },
   inbox,
   onChangeChat() {
     throw new Error();
