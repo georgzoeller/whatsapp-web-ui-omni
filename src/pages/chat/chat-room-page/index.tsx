@@ -47,7 +47,7 @@ export default function ChatRoomPage() {
                 <Icon id="downArrow" />
               </ScrollButton>
             )}
-            <Footer />
+            <Footer activeInbox={activeInbox} />
           </FooterContainer>
         </Body>
         <Sidebar title="Search" isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)}>
