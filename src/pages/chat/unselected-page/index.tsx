@@ -17,13 +17,13 @@ export default function UnSelectedChatPage() {
         <ImageWrapper>
           <Image src={getImageURL()} />
         </ImageWrapper>
-        <Title> WhatsApp Web </Title>
+        <Title> OmniWA Web </Title>
         <Text>
-          Send and receive messages without keeping your phone online. <br />
-          Use WhatsApp on up to 4 linked devices and 1 phone at the same time.
+          Welcome to OmniWA, your chat interface into Omnitool<br />
+          Use OmniWA to interact with your chat enabled OmniTool recipes in a familiar environment.
         </Text>
         <Text>
-          <span>Built by</span>{" "}
+          <span>Built on technology by</span>{" "}
           <Link target="_blank" href="https://github.com/jazimabbas">
             Jazim Abbas
           </Link>

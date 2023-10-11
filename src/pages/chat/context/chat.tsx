@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { inbox } from "../data/inbox";
+import React, { useState, useEffect } from "react";
 import { Inbox } from "common/types/common.type";
 
 type User = {
@@ -8,35 +7,56 @@ type User = {
 };
 
 type ChatContextProp = {
-  user: User;
+  user?: User;  // Make user optional since we'll get it from the API now
   inbox: Inbox[];
+  loading: boolean;
   activeChat?: Inbox;
   onChangeChat: (chat: Inbox) => void;
 };
 
 const initialValue: ChatContextProp = {
-  user: { name: "Jazim Abbas", image: "./assets/images/girl.jpeg" },
-  inbox,
+  inbox: [],
+  loading: true,
   onChangeChat() {
     throw new Error();
   },
 };
+interface MyWindow extends Window {
+  omniSDK: any;
+}
+declare var window: MyWindow;
+
+
 
 export const ChatContext = React.createContext<ChatContextProp>(initialValue);
 
 export default function ChatProvider(props: { children: any }) {
   const { children } = props;
 
-  const [user] = useState<User>(initialValue.user);
-  const [inbox] = useState<Inbox[]>(initialValue.inbox);
+  const [user, setUser] = useState<User | undefined>();
+  const [inbox, setInbox] = useState<Inbox[]>(initialValue.inbox);
+  const [loading, setLoading] = useState<boolean>(initialValue.loading);
   const [activeChat, setActiveChat] = useState<Inbox>();
+
+  useEffect(() => {
+    window.omniSDK.runExtensionScript("inbox",{})
+      .then(data => {
+        setUser(data.user); // Set the user object
+        setInbox(data.inbox); // Set the inbox array
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error("There was a problem with the fetch operation:", error);
+        setLoading(false);
+      });
+  }, []);
 
   const handleChangeChat = (chat: Inbox) => {
     setActiveChat(chat);
   };
 
   return (
-    <ChatContext.Provider value={{ user, inbox, activeChat, onChangeChat: handleChangeChat }}>
+    <ChatContext.Provider value={{ user, inbox, loading, activeChat, onChangeChat: handleChangeChat }}>
       {children}
     </ChatContext.Provider>
   );

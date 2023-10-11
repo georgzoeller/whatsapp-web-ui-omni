@@ -1,5 +1,5 @@
-# WhatsApp Web 
-WhatsApp Web UI built with React, TypeScript, and Styled-Components.
+# OmniWA Web
+WhatsApp=Clone Web UI built with React, TypeScript, and Styled-Components.
 
 ## Table of Contents
 - [Screenshots](#screenshots)

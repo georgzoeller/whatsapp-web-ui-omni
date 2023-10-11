@@ -1,9 +1,9 @@
-import { forwardRef, useMemo } from "react";
+import { forwardRef, useEffect, useState } from "react"; // import useState and useEffect
 import { useParams } from "react-router-dom";
 
 import Icon from "common/components/icons";
 import useScrollToBottom from "./hooks/useScrollToBottom";
-import { getMessages, Message } from "./data/get-messages";
+import { Message } from "./data/get-messages";  // We no longer need getMessages
 import {
   ChatMessage,
   ChatMessageFiller,
@@ -24,10 +24,25 @@ export default function MessagesList(props: MessagesListProps) {
   const { onShowBottomIcon, shouldScrollToBottom } = props;
 
   const params = useParams();
-  const messages = useMemo(() => {
-    return getMessages();
+  const [messages, setMessages] = useState([]); // Initialize state
+
+  useEffect(() => {
+    // Fetch messages using the new function
+    const fetchMessages = async () => {
+      try {
+        //@ts-ignore
+        const result = await window.omniSDK.runExtensionScript("chat", {chatId: params.id});
+
+        setMessages(result.messages);
+      } catch (error) {
+        console.error("Failed to fetch messages:", error);
+      }
+    };
+
+    fetchMessages();
     // eslint-disable-next-line
   }, [params.id]);
+
   const { containerRef, lastMessageRef } = useScrollToBottom(
     onShowBottomIcon,
     shouldScrollToBottom,
@@ -45,7 +60,7 @@ export default function MessagesList(props: MessagesListProps) {
         <Date> TODAY </Date>
       </DateWrapper>
       <MessageGroup>
-        {messages.map((message, i) => {
+        {messages.map((message:Message, i) => {
           if (i === messages.length - 1) {
             return <SingleMessage key={message.id} message={message} ref={lastMessageRef} />;
           } else {

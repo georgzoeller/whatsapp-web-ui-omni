@@ -5,7 +5,7 @@ import { AlertContainer, IconWrapper, TextContainer, Text, CloseIcon } from "./s
 export default function SidebarAlert() {
   const [isClose, setIsClose] = useState(false);
 
-  if (isClose) return <></>;
+  /*if (isClose)*/ return <></>;
 
   return (
     <>
