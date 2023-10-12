@@ -7,7 +7,7 @@ export const SidebarContainer = styled.aside`
   display: flex;
   flex-direction: column;
 
-  @media screen and (min-width: 1000px) and (max-width: 1300px) {
+  @media screen and (min-width: 1000px) and (max-width: 1600px) {
     flex: 35%;
 
     & ~ div {

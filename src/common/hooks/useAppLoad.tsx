@@ -25,9 +25,9 @@ type AppLoadProps = {
 export default function useAppLoad(props?: AppLoadProps) {
   const {
     isProgressStartAutomatically = true,
-    progressInterval = 300,
-    incrementProgressValue = 10,
-    successLoadedTimeout = 1000,
+    progressInterval = 100,
+    incrementProgressValue = 50,
+    successLoadedTimeout = 500,
     stoppedProgressValue = 70,
     isManualProgressCompleted = true,
   } = props ?? {};
