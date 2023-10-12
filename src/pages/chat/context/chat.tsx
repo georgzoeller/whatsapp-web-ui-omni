@@ -41,6 +41,18 @@ export default function ChatProvider(props: { children: any }) {
   useEffect(() => {
     window.omniSDK.runExtensionScript("inbox",{})
       .then(data => {
+
+        console.log('hooking inbox')
+        if (globalThis.omniSDK.args?.chat)
+        {
+
+          const  chat = globalThis.omniSDK.args.chat
+          if (!data.inbox.find(i=>i.id === chat.id))
+          {
+            data.inbox = data.inbox.concat([chat])
+          }
+        }
+
         setUser(data.user); // Set the user object
         setInbox(data.inbox); // Set the inbox array
         setLoading(false);

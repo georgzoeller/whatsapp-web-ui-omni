@@ -7,5 +7,7 @@ export type Message = {
   timestamp: string;
   messageStatus: MessageStatus;
   isOpponent: boolean;
+  attachments?:any;
+
 };
 

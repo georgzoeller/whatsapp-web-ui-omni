@@ -15,6 +15,7 @@ import {
   MessageGroup,
 } from "./styles";
 
+
 type MessagesListProps = {
   onShowBottomIcon: Function;
   shouldScrollToBottom?: boolean;
@@ -32,12 +33,12 @@ export default function MessagesList(props: MessagesListProps) {
     const handleMessage = (message:any) => {
 
       // Ensure the incoming message belongs to the current chat
-      //if (message.sender === params.id) {
+      if (message.workflowId === params.id || !message.workflowId) {
         // Append the new message to the current list
 
         const convertedMessage = message.map((m:any) => {
         {
-          return {
+          const msg = {
             id: Date.now(),
             date: (new Date()).toLocaleDateString(),
             time:  (new Date()).toLocaleTimeString(),
@@ -45,26 +46,60 @@ export default function MessagesList(props: MessagesListProps) {
             isOpponent: m.isOpponent ?? true,
             body: m.text
           }
+
+          // Temporary solution, need to create a proper gallery component
+          if (m.images?.length > 0)
+          {
+            msg.body += `<div class="images">`
+            m.images.forEach((i:any) => {
+              msg.body +=`<a style="cursor: pointer; margin-right:2px;" onclick="window.omniSDK.signalIntent('show',undefined,{fid: '${i.fid}', mimeType: '${i.mimeType}'})"><img src="/fid/${i.fid}?width=128&height=128" /></a>`
+            })
+            msg.body += `</div>`
+
+          }
+
+          return msg
         }
         })
 
         setMessages((prevMessages) => {
           return prevMessages.concat(convertedMessage);
         });
-      //}
+      }
     };
 
     // Fetch messages using the new function
     const fetchMessages = async () => {
-      try {
-        //@ts-ignore
-        const result = await globalThis.omniSDK.runExtensionScript("chat", {chatId: params.id});
+
         console.log("subscribing...")
         globalThis.omniSDK.events.on(OmniSDKClientEvents.CHAT_MESSAGE_RECEIVED, handleMessage);
-        setMessages(result.messages);
-      } catch (error) {
-        console.error("Failed to fetch messages:", error);
-      }
+
+        const  chat = globalThis.omniSDK.args.chat
+        const result:{messages:Message[]} = {messages:[]}
+        if (chat)
+        {
+            result.messages = [{
+              id: Date.now().toString(),
+              body: chat.description || `Welcome to ${chat.name}`,
+              date: new Date().toLocaleDateString(),
+              timestamp: new Date().toLocaleTimeString(),
+              messageStatus: "DELIVERED",
+              isOpponent: true,
+            } ] ;
+            //@ts-ignore
+             setMessages(result.messages);
+        }
+        else
+        {
+          try {
+          //@ts-ignore
+            let result = await globalThis.omniSDK.runExtensionScript("chat", {chatId: params.id});
+
+            setMessages(result.messages);
+          } catch (error) {
+            console.error("Failed to fetch messages:", error);
+          }
+        }
     };
     //@ts-ignore
 
@@ -90,8 +125,7 @@ export default function MessagesList(props: MessagesListProps) {
     <Container ref={containerRef}>
       <EncryptionMessage>
         <Icon id="lock" className="icon" />
-        Messages are end-to-end encrypted. No one outside of this chat, not even WhatsApp, can read
-        or listen to them. Click to learn more.
+        Conversations with your assistants are stored within omnitool. Recipes that interact with third party APIs will transmit data to those APIs.
       </EncryptionMessage>
       <DateWrapper>
         <DateComponent> TODAY </DateComponent>
@@ -119,7 +153,6 @@ const SingleMessage = forwardRef((props: { message: Message }, ref: any) => {
       ref={ref}
     >
      <span dangerouslySetInnerHTML={{ __html: message.body }}></span>
-
 
       <ChatMessageFiller />
       <ChatMessageFooter>

@@ -14,7 +14,7 @@ export const Container = styled.aside<{ readonly isOpen: boolean }>`
       flex: 20%;
     `}
 
-  @media screen and (max-width: 1600px) {
+  @media screen and (max-width: 1200px) {
     transition: transform 0.1s ease;
     transform: translateX(120vw);
     position: absolute;

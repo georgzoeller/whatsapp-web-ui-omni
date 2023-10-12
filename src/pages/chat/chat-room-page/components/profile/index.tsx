@@ -49,13 +49,13 @@ export default function ProfileSection(props: ProfileSectionProps) {
 
       <Section>
         <HeadingWrapper>
-          <Heading>About and phone number</Heading>
+          <Heading>About</Heading>
         </HeadingWrapper>
         <ul>
           <AboutItem>
-            Everyone should learn how to program because it teaches you how to think.
+            At your service!
           </AboutItem>
-          <AboutItem>+123456789</AboutItem>
+          <AboutItem>@nickname</AboutItem>
         </ul>
       </Section>
 
