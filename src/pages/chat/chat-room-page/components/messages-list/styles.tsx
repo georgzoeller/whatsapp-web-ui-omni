@@ -27,7 +27,7 @@ export const DateWrapper = styled.div`
   ${wrapperStyles}
 `;
 
-export const Date = styled.span`
+export const DateComponent = styled.span`
   background: ${(props) => props.theme.badge.bgColor};
   display: inline-block;
   color: ${(props) => props.theme.badge.textColor};

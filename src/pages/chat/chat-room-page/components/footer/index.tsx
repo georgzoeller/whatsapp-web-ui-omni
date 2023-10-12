@@ -9,7 +9,7 @@ import {
   SendMessageButton,
   Wrapper,
 } from "./styles";
-
+import { OmniSDKClientEvents} from 'omni-sdk';
 const attachButtons = [
   { icon: "attachRooms", label: "Choose room" },
   { icon: "attachContacts", label: "Choose contact" },
@@ -17,6 +17,9 @@ const attachButtons = [
   { icon: "attachCamera", label: "Use camera" },
   { icon: "attachImage", label: "Choose image" },
 ];
+
+
+
 
 export default function Footer({ activeInbox }) {
   const [showIcons, setShowIcons] = useState(false);
@@ -35,11 +38,27 @@ export default function Footer({ activeInbox }) {
         // TODO: Add to server side chatlog
         //@ts-ignore
         await window.omniSDK.startRecipe(activeInbox.id, {text: inputText}); // Assuming activeInbox.id is the required identifier
+
+        // TODO: This is hacktastic. We probably want a CHAT_MESSAGE_SENT event instead
+        globalThis.omniSDK.events.emit(OmniSDKClientEvents.CHAT_MESSAGE_RECEIVED, [
+          {
+            text: inputText,
+            isOpponent: false
+          }]
+        )
+
         // TODO: Marshal response
         setInputText(""); // Clear input after sending
       } catch (error) {
         console.error("Failed to send message:", error);
       }
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) { // This ensures Enter without Shift triggers the send
+      e.preventDefault(); // Prevent newline from being entered into the text area
+      handleSend();
     }
   };
 
@@ -61,6 +80,7 @@ export default function Footer({ activeInbox }) {
         placeholder="Type a message here .."
         value={inputText}
         onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
       />
       <SendMessageButton onClick={handleSend} disabled={inputText.trim() === ""}>
         <Icon id="send" className="icon" />
