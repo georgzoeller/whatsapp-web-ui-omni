@@ -4,8 +4,8 @@ import App from "App";
 import GlobalStyle from "global-styles";
 import AppThemeProvider from "common/theme";
 import { MainPageLoader } from "common/components/loader";
-import {OmniSDKClient, OmniSDKClientEvents} from 'omni-sdk';
-const sdk = new OmniSDKClient("omni-extension-wa-chat-ui").init();
+import {OmniSDKClient, OmniSDKHostMessages} from 'omni-sdk';
+const sdk = new OmniSDKClient("omni-extension-wa-chat-ui").init({subscriptions: [OmniSDKHostMessages.CHAT_MESSAGE_RECEIVED]});
 interface MyWindow extends Window {
   omniSDK: any;
 }
